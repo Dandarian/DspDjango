@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Title: {{ strategy.name }}</h1>
+
+    <p><strong>Id:</strong> <a href="">{{ strategy.id }}</a></p>
+    <p><strong>Name:</strong> {{ strategy.name }}</p>
+    <p><strong>Start date:</strong> {{ strategy.start_datetime }}</p> 
+    <p><strong>End date:</strong> {{ strategy.end_datetime }}</p>
+    <p><strong>Total budget:</strong> {{ strategy.total_budget }}</p>
+    <p><strong>Daily budget:</strong> {{ strategy.daily_budget }}</p>
+    <p><strong>Status:</strong> {{ strategy.get_status_display }}</p>
+    <p><strong>Campaign:</strong> {{ strategy.campaign }}</p>
+    <p><strong>Bid:</strong> {{ strategy.bid }}</p>
+    <p><strong>Geo position:</strong> {{ strategy.geo_position }}</p>
+    <p><strong>Categories:</strong> {{ strategy.categories }}</p>
+    <p><strong>Device types:</strong> {{ strategy.device_types }}</p>
+    <p><strong>Creation date:</strong> {{ strategy.creation_date }}</p>
+    <p><strong>Update date:</strong> {{ strategy.update_date }}</p>
+
+    </div>
+{% endblock %}

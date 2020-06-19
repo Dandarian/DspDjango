@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Title: {{ campaign.name }}</h1>
+
+    <p><strong>Id:</strong> <a href="">{{ campaign.id }}</a></p>
+    <p><strong>Name:</strong> {{ campaign.name }}</p>
+    <p><strong>Start date:</strong> {{ campaign.start_datetime }}</p> 
+    <p><strong>End date:</strong> {{ campaign.end_datetime }}</p>
+    <p><strong>Total budget:</strong> {{ campaign.total_budget }}</p>
+    <p><strong>Daily budget:</strong> {{ campaign.daily_budget }}</p>
+    <p><strong>Status:</strong> {{ campaign.get_status_display }}</p>
+    <p><strong>Creation date:</strong> {{ campaign.creation_date }}</p>
+    <p><strong>Update date:</strong> {{ campaign.update_date }}</p>
+
+    </div>
+{% endblock %}

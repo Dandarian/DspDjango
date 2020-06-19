@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Dsp Home</h1>
+    <p>Welcome to <em>Dsp</em>, Django demo website.</p>
+
+<h2>Dynamic content</h2>
+    <p>Here could be statistics, but now we have only</p>
+    <p>The number of your active campaigns:</p>
+    <ul>
+        <li>{{ num_active_campaigns }}</li>
+    </ul>
+
+{% endblock %}

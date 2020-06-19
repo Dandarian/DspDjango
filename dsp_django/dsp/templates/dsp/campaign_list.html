@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Campaigns</h1>
+
+    {% if campaign_list %}
+    <ul>
+
+        {% for campaign in campaign_list %}
+        <li>
+            {{ campaign.id }} <a href="{{ campaign.get_absolute_url }}">{{campaign.name}}</a> | {{ campaign.get_status_display }}
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>There are no campaigns.</p>
+    {% endif %}       
+{% endblock %}

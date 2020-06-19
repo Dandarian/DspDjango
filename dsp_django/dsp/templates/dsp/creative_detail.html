@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Title: {{ creative.name }}</h1>
+
+    <p><strong>Id:</strong> <a href="">{{ creative.id }}</a></p>
+    <p><strong>Name:</strong> {{ creative.name }}</p>
+    <p><strong>Campaign:</strong> {{ creative.campaign }}</p> 
+    <p><strong>Strategies:</strong> {% for strategy in creative.strategies.all %} {{ strategy }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Target URL:</strong> {{ creative.target_url }}</p>
+    <p><strong>Inventory type:</strong> {{ creative.get_inventory_type_display }}</p>
+    <p><strong>Skip sec:</strong> {{ creative.skip_sec }}</p>
+    <p><strong>Status:</strong> {{ creative.get_status_display }}</p>
+    <p><strong>Creation date:</strong> {{ creative.creation_date }}</p>
+    <p><strong>Update date:</strong> {{ creative.update_date }}</p>
+
+    </div>
+{% endblock %}

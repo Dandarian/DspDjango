@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Creatives</h1>
+
+    {% if creative_list %}
+    <ul>
+
+        {% for creative in creative_list %}
+        <li>
+            {{ creative.id }} <a href="{{ creative.get_absolute_url }}">{{creative.name}}</a> | {{ creative.get_status_display }}
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>There are no creatives.</p>
+    {% endif %}       
+{% endblock %}
