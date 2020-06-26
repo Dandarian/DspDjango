@@ -35,4 +35,5 @@ urlpatterns = [
     # Python 3.5 or newer.
     # 'noqa' is for Anaconda to ignore
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT), # noqa
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

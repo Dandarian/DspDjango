@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% block content %}
+    <p>First choose your campaign.</p>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+        {{ form }}
+        </table>
+        <input type="submit" value="Continue" />
+    </form>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Strategies</h1>
+    <h1>Strategies <a href="{% url 'strategy-create' %}">+</a></h1>
 
     {% if strategy_list %}
     <ul>

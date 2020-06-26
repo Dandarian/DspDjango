@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Title: {{ strategy.name }}</h1>
+    <h1>Title: {{ strategy.name }} <a href="{{ strategy.get_absolute_url }}/update">Edit</a></h1>
 
     <p><strong>Id:</strong> <a href="">{{ strategy.id }}</a></p>
     <p><strong>Name:</strong> {{ strategy.name }}</p>
@@ -17,6 +17,7 @@
     <p><strong>Device types:</strong> {{ strategy.device_types }}</p>
     <p><strong>Creation date:</strong> {{ strategy.creation_date }}</p>
     <p><strong>Update date:</strong> {{ strategy.update_date }}</p>
+    <a href="{{ strategy.get_absolute_url }}/delete">Delete</a>
 
     </div>
 {% endblock %}

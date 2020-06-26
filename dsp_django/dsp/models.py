@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxLengthValidator
 # Used to generate URLs by reversing the URL patterns
 from django.urls import reverse
 from datetime import datetime
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -51,6 +52,17 @@ class Campaign(models.Model):
         max_length=2,
         choices=STATUS_CHOICES,
         default=PAUSED,
+    )
+
+    def get_user(self):
+        user = self.request.user
+        return user
+
+    user_id = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        # default=User,
     )
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
@@ -143,6 +155,7 @@ class Strategy(models.Model):
         choices=STATUS_CHOICES,
         default=PAUSED,
     )
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
@@ -217,6 +230,7 @@ class Creative(models.Model):
         choices=STATUS_CHOICES,
         default=PAUSED,
     )
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 

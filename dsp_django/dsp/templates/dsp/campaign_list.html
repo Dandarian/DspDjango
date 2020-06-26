@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Campaigns</h1>
+    <h1>Campaigns <a href="{% url 'campaign-create' %}">+</a></h1>
 
     {% if campaign_list %}
     <ul>

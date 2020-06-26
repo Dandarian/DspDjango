@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Creatives</h1>
+    <h1>Creatives <a href="{% url 'creative-create' %}">+</a></h1>
 
     {% if creative_list %}
     <ul>
