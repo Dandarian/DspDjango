@@ -26,5 +26,8 @@ urlpatterns = [
     url(r'^strategy/(?P<pk>\d+)/delete/$', views.StrategyDelete.as_view(),
         name='strategy-delete'),
     url(r'^creative/create/$', views.create_creative, name='creative-create'),
-    url(r'^creative/(?P<pk>\d+)/update/$', views.update_creative, name='creative-update'),
+    url(r'^creative/(?P<pk>\d+)/update/$', views.update_creative,
+        name='creative-update'),
+    url(r'^creative/(?P<pk>\d+)/delete/$', views.CreativeDelete.as_view(),
+        name='creative-delete'),
 ]

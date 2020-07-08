@@ -3,9 +3,9 @@
 {% block content %}
     <h1>Title: {{ campaign.name }} <a href="{{ campaign.get_absolute_url }}/update">Edit</a></h1>
 
-    <p><strong>Id:</strong> <a href="">{{ campaign.id }}</a></p>
+    <p><strong>Id:</strong> {{ campaign.id }}</p>
     <p><strong>Name:</strong> {{ campaign.name }}</p>
-    <p><strong>Start date:</strong> {{ campaign.start_datetime }}</p> 
+    <p><strong>Start date:</strong> {{ campaign.start_datetime }}</p>
     <p><strong>End date:</strong> {{ campaign.end_datetime }}</p>
     <p><strong>Total budget:</strong> {{ campaign.total_budget }}</p>
     <p><strong>Daily budget:</strong> {{ campaign.daily_budget }}</p>
@@ -13,6 +13,36 @@
     <p><strong>Creation date:</strong> {{ campaign.creation_date }}</p>
     <p><strong>Update date:</strong> {{ campaign.update_date }}</p>
     <a href="{{ campaign.get_absolute_url }}/delete">Delete</a>
+
+    <h1>Campaign's strategies:</h1>
+    {% if strategies %}
+    <ul>
+
+        {% for strategy in strategies %}
+        <li>
+            {{ strategy.id }} <a href="{{ strategy.get_absolute_url }}">{{strategy.name}}</a> | {{ strategy.get_status_display }}
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>There are no strategies.</p>
+    {% endif %}
+
+    <h1>Campaign's creatives:</h1>
+    {% if creatives %}
+    <ul>
+
+        {% for creative in creatives %}
+        <li>
+            {{ creative.id }} <a href="{{ creative.get_absolute_url }}">{{creative.name}}</a> | {{ creative.get_status_display }}
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>There are no creatives.</p>
+    {% endif %}
 
     </div>
 {% endblock %}

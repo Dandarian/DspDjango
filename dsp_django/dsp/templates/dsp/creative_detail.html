@@ -1,19 +1,20 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Title: {{ creative.name }}</h1>
+    <h1>Title: {{ creative.name }} <a href="{{ creative.get_absolute_url }}/update">Edit</a></h1>
 
-    <p><strong>Id:</strong> <a href="">{{ creative.id }}</a></p>
+    <p><strong>Id:</strong> {{ creative.id }}</p>
     <p><strong>Name:</strong> {{ creative.name }}</p>
-    <p><strong>Campaign:</strong> {{ creative.campaign }}</p>
+    <p><strong>Campaign:</strong> <a href="{{ creative.campaign.get_absolute_url }}">{{ creative.campaign }}</a></p>
     <!-- if not forloop.last сделано чтобы ставить запятую после каждой стратегии, кроме последней -->
-    <p><strong>Strategies:</strong> {% for strategy in creative.strategies.all %} {{ strategy }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Strategies:</strong> {% for strategy in creative.strategies.all %} <a href="{{ strategy.get_absolute_url }}">{{ strategy }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p><strong>Target URL:</strong> {{ creative.target_url }}</p>
     <p><strong>Inventory type:</strong> {{ creative.get_inventory_type_display }}</p>
     <p><strong>Skip sec:</strong> {{ creative.skip_sec }}</p>
     <p><strong>Status:</strong> {{ creative.get_status_display }}</p>
     <p><strong>Creation date:</strong> {{ creative.creation_date }}</p>
     <p><strong>Update date:</strong> {{ creative.update_date }}</p>
+    <a href="{{ creative.get_absolute_url }}/delete">Delete</a>
 
     </div>
 {% endblock %}

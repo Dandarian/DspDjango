@@ -46,6 +46,22 @@ class CampaignListView(LoginRequiredMixin, generic.ListView):
 class CampaignDetailView(LoginRequiredMixin, generic.DetailView):
     model = Campaign
 
+    # Это так мы прогружаем список стратегий для данной кампании
+    def get_context_data(self, **kwargs):
+        context = super(CampaignDetailView, self).get_context_data(**kwargs)
+        strategies = Strategy.objects.filter(
+            user_id=self.request.user).filter(
+            campaign=self.kwargs.get('pk')).order_by('-update_date')
+        context['strategies'] = strategies
+        # Потом так же прогружаем список креативов
+        creatives = Creative.objects.filter(
+            user_id=self.request.user).filter(
+            campaign=self.kwargs.get('pk')).order_by('-update_date')
+        context['creatives'] = creatives
+        return context
+
+    # extra_context = {'campaign_strategy_list': campaign_strategy_list()}
+
 
 class StrategyListView(LoginRequiredMixin, generic.ListView):
     model = Strategy
@@ -55,9 +71,21 @@ class StrategyListView(LoginRequiredMixin, generic.ListView):
         return Strategy.objects.filter(user_id=self.request.user).order_by(
             '-update_date')
 
+    def get_queryset_for_campaign(self, campaign_id):
+        return Strategy.objects.filter(user_id=self.request.user).filter(
+            campaign=campaign_id).order_by('-update_date')
+
 
 class StrategyDetailView(LoginRequiredMixin, generic.DetailView):
     model = Strategy
+
+    def get_context_data(self, **kwargs):
+        context = super(StrategyDetailView, self).get_context_data(**kwargs)
+        creatives = Creative.objects.filter(
+            user_id=self.request.user).filter(
+            strategies=self.kwargs.get('pk')).order_by('-update_date')
+        context['creatives'] = creatives
+        return context
 
 
 class CreativeListView(LoginRequiredMixin, generic.ListView):
@@ -73,7 +101,7 @@ class CreativeDetailView(LoginRequiredMixin, generic.DetailView):
     model = Creative
 
 
-class CampaignCreate(CreateView):
+class CampaignCreate(LoginRequiredMixin, CreateView):
     form_class = CampaignForm
     model = Campaign
     # fields = '__all__'
@@ -87,19 +115,20 @@ class CampaignCreate(CreateView):
         return super(CampaignCreate, self).form_valid(form)
 
 
-class CampaignUpdate(UpdateView):
+class CampaignUpdate(LoginRequiredMixin, UpdateView):
     model = Campaign
     fields = ['name', 'start_datetime', 'end_datetime', 'total_budget',
               'daily_budget', 'status']
     success_url = reverse_lazy('campaigns')
 
 
-class CampaignDelete(DeleteView):
+class CampaignDelete(LoginRequiredMixin, DeleteView):
     model = Campaign
     # Возвращает в список
     success_url = reverse_lazy('campaigns')
 
 
+@login_required
 def create_strategy(request):
     """
     View function for creating a strategy
@@ -189,7 +218,7 @@ def update_strategy(request, pk):
 """
 
 
-class StrategyUpdate(UpdateView):
+class StrategyUpdate(LoginRequiredMixin, UpdateView):
     form_class = UpdateStrategyModelForm
     model = Strategy
     # template_name = 'dsp/templates/dsp/update_strategy.html'
@@ -198,12 +227,13 @@ class StrategyUpdate(UpdateView):
     success_url = reverse_lazy('strategies')
 
 
-class StrategyDelete(DeleteView):
+class StrategyDelete(LoginRequiredMixin, DeleteView):
     model = Strategy
     # Возвращает в список
     success_url = reverse_lazy('strategies')
 
 
+@login_required
 def create_creative(request):
     """
     View function for creating a creative
@@ -241,7 +271,8 @@ def create_creative(request):
                     # update_date=form.cleaned_data['update_date'],
                 )
                 creative.save()
-                # Это нужно использовать, т. к. ManyToMany нельзя напрямую сохранить
+                # Это нужно использовать, т. к. ManyToMany нельзя напрямую
+                # сохранить
                 # Также нужно сохранить до этого, т к нужен айди креатива
                 creative.strategies.set(form.cleaned_data['strategies'])
                 # redirect to a new URL:
@@ -327,6 +358,7 @@ def create_creative(request):
     return render(request, 'dsp/create_creative.html', {'form': form})
 
 
+@login_required
 def update_creative(request, pk):
     """
     View function for updating a creative
@@ -412,3 +444,9 @@ def update_creative(request, pk):
         form.user_strategies(request.user, creative.campaign.id)
 
     return render(request, 'dsp/create_creative.html', {'form': form})
+
+
+class CreativeDelete(LoginRequiredMixin, DeleteView):
+    model = Creative
+    # Возвращает в список
+    success_url = reverse_lazy('creatives')
